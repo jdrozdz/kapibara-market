@@ -5,8 +5,8 @@ import logger from 'morgan';
 import {errorHandlerMiddleware} from "./middleware/error-handler.middleware";
 import {Config} from "./models/config.model";
 import _debug from "debug";
-import http from "http";
 import {AppRouteModel} from "./models/app-route.model";
+
 
 export class AppSetup {
     private app: Express = express();
@@ -30,9 +30,11 @@ export class AppSetup {
         }
         this.app.use(logger('dev'));
         this.app.use(express.json());
-//         this.app.use(express.urlencoded({extended: false}));
-//        this.app.use(cookieParser());
-//        this.app.use(express.static(path.join(__dirname, 'public')));
+        this.app.use(express.urlencoded({extended: false}));
+        this.app.use(cookieParser());
+        const public_dir = path.join(__dirname, '..', '..', 'public');
+        console.log(`Public dir: ${public_dir}`);
+        this.app.use(express.static(public_dir));
         this.app.use(errorHandlerMiddleware);
     }
 

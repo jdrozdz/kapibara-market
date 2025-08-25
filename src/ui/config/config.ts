@@ -7,7 +7,7 @@ const config: Config = {
     port: Number(process.env.PORT) || 3000,
     env: process.env.NODE_ENV || 'development',
     enableView: true,
-    viewsPath: 'views',
+    viewsPath: '../ui/views',
     viewEngine: 'twig',
 }
 
