@@ -2,6 +2,7 @@ import {AppRouteModel, RouteMethod} from "../../common/models/app-route.model";
 
 const cryptoRoute: AppRouteModel[] = [
     {
+        prefix: 'api',
         path: '/',
         method: RouteMethod.GET,
         handler: (req, res, next) => {
@@ -11,6 +12,7 @@ const cryptoRoute: AppRouteModel[] = [
         }
     },
     {
+        prefix: 'api',
         path: '/:id',
         method: RouteMethod.GET,
         handler: (req, res, next) => {
@@ -20,6 +22,7 @@ const cryptoRoute: AppRouteModel[] = [
         }
     },
     {
+        prefix: 'api',
         path: '/',
         method: RouteMethod.POST,
         handler: (req, res, next) => {
@@ -33,6 +36,7 @@ const cryptoRoute: AppRouteModel[] = [
         }
     },
     {
+        prefix: 'api',
         path: '/:id',
         method: RouteMethod.PUT,
         handler: (req, res, next) => {
@@ -42,6 +46,7 @@ const cryptoRoute: AppRouteModel[] = [
         }
     },
     {
+        prefix: 'api',
         path: '/:id',
         method: RouteMethod.DELETE,
         handler: (req, res, next) => {

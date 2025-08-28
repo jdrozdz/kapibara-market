@@ -8,6 +8,7 @@ export enum RouteMethod {
 }
 
 export interface AppRouteModel {
+    prefix?: string;
     path: string;
     method: RouteMethod;
     handler: (req: Request, res: Response, next: NextFunction) => void;

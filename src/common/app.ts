@@ -1,4 +1,4 @@
-import express, {Express, Router} from 'express';
+import express, {Express} from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
@@ -38,15 +38,11 @@ export class AppSetup {
         this.app.use(errorHandlerMiddleware);
     }
 
-    public configureRoute(path: string, route: Router) {
-        this.app.use(path, route);
-    }
-
     public configureRoutes(routes: AppRouteModel[]) {
         routes.forEach(route => {
-            const router: Router = Router();
-            router[route.method](route.path, route.handler);
-            this.configureRoute(route.path, router);
+            const prefix: string = route.prefix ? `/${route.prefix}` : '';
+            const routePath = `${prefix}${route.path}`;
+            this.app[route.method](routePath, route.handler);
         });
     }
 
