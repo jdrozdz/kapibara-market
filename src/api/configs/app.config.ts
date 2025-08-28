@@ -1,7 +1,7 @@
 import {Config} from "../../common/models/config.model";
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ path: `.env.local`, override: true });
 
 const config: Config = {
     port: parseInt(process.env.PORT || '3001'),

@@ -9,7 +9,7 @@ export class AzKeyVaultConfig {
         return new SecretClient(this._url, credentials)
     }
     private get _url(): string {
-        dotenv.config();
+        dotenv.config({ path: `.env.local`, override: true });
         return process.env.KEY_VAULT_URL ?? '';
     }
     private get isEnabled(): boolean {

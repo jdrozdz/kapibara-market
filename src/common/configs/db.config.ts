@@ -2,22 +2,28 @@ import dotenv from "dotenv";
 import * as path from "path";
 import {DbConfigurationMode} from "../enums/db-configuration.mode";
 import {AzKeyVaultConfig} from "./az-key-vault.config";
+import {Sequelize} from "sequelize";
 
-dotenv.config();
+dotenv.config({ path: `.env.local`, override: true });
 
 export class DbConfig {
     static DB_CONFIG_MODE: DbConfigurationMode = DbConfigurationMode.ENV;
-    name: string = "kapibara-app";
-    host?: string;
-    port?: number;
-    password?: string | undefined;
-    username?: string | undefined;
+    static IN_MEMORY: boolean = false;
+    private name: string = "kapibara-app";
+    private host?: string;
+    private port?: number;
+    private password?: string | undefined;
+    private username?: string | undefined;
 
     get dbPath(): string {
         return this.name && !this.isSqlite ? path.resolve(this.name) : 'database name was not defined! or dialect is not SQLite';
     }
+    get instance() {
+        return this._instance;
+    }
 
-    private dialect: string = 'postgres';
+    private readonly _instance;
+    private dialect: 'postgres' | 'sqlite' | 'mysql' = 'postgres';
     private get isSqlite(): boolean {
         return this.dialect === 'sqlite';
     };
@@ -27,14 +33,15 @@ export class DbConfig {
 
 
     /**
+     * For testing purpose firstly set DbConfig.IN_MEMORY=true, then you can create object and use instance
      * @param name database name is required
-     * @param dialect default pgsql
+     * @param dialect default postgres
      * @param host default 127.0.0.1
      * @param port default 5432
      * @param username default undefined
      * @param password default undefined
      */
-    constructor(name?: string, dialect?: string, host?: string, port?: number, username?: string, password?: string) {
+    constructor(name?: string, dialect?: 'postgres' | 'mysql' | 'sqlite', host?: string, port?: number, username?: string, password?: string) {
         if((name || dialect || host || port || username || password) && DbConfig.DB_CONFIG_MODE === DbConfigurationMode.CONSTRUCTOR) {
             this.name = name!;
             this.dialect = dialect!;
@@ -49,11 +56,29 @@ export class DbConfig {
         } else {
             throw Error(`Database configuration mode doesn't exist`);
         }
+
+        if(this.isSqlite) {
+            this._instance = new Sequelize(this.dbPath, {
+                dialect: this.dialect
+            });
+        } else if(DbConfig.IN_MEMORY) {
+            this._instance = new Sequelize({
+                dialect: 'sqlite',
+                storage: ':memory:',
+                pool: { max: 1, idle: Infinity, maxUses: Infinity }
+            });
+        } else {
+            this._instance = new Sequelize(this.name, this.username!, this.password!, {
+                host: this.host!,
+                port: this.port!,
+                dialect: this.dialect
+            });
+        }
     }
 
     private configureWithEnv(): void {
         this.name = process.env.DB_NAME as string;
-        this.dialect = process.env.DB_DIALECT as string ?? 'postgres';
+        this.dialect = process.env.DB_DIALECT as 'postgres' | 'sqlite' | 'mysql' ?? 'postgres';
         this.host = process.env.DB_HOST as string ?? 'localhost';
         this.port = Number(process.env.DB_PORT) ?? '5432';
         this.username = process.env.DB_USERNAME as string ?? undefined;
@@ -66,7 +91,7 @@ export class DbConfig {
             this.username = await this.az.getValue('db-username');
             this.password = await this.az.getValue('db-password');
         })();
-        this.dialect = process.env.DB_DIALECT as string ?? 'postgres';
+        this.dialect = process.env.DB_DIALECT as 'postgres' | 'sqlite' | 'mysql' ?? 'postgres';
         this.host = process.env.DB_HOST as string ?? 'localhost';
         this.port = Number(process.env.DB_PORT) ?? '5432';
     }
