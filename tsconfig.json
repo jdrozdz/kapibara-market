@@ -1,10 +1,10 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    // File Layout
     "rootDir": "./src",
     "outDir": "./dist",
     "module": "commonjs",
+    "moduleResolution": "nodenext",
     "target": "ES2022",
     "sourceMap": true,
     "declaration": true,
@@ -17,8 +17,13 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "types": [
+      "node",
+      "@types/jest"
+    ]
   },
   "exclude": [
     "node_modules",

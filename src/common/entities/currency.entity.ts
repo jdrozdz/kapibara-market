@@ -1,51 +1,24 @@
-import {CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize} from "sequelize";
+import {Attribute, AutoIncrement, Default, NotNull, PrimaryKey, Table} from "@sequelize/core/decorators-legacy";
+import {CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model} from "@sequelize/core";
 
-export class CurrencyEntity extends Model<InferAttributes<CurrencyEntity>, InferCreationAttributes<CurrencyEntity>> {
+@Table({
+    tableName: "currency",
+})
+export class CurrencyEntity extends Model<InferAttributes<CurrencyEntity>,  InferCreationAttributes<CurrencyEntity>> {
+
+    @PrimaryKey
+    @AutoIncrement
+    @Attribute(DataTypes.INTEGER)
     declare id: CreationOptional<number>;
-    declare name: string;
-    declare code: string;
-    declare isCrypto: boolean;
-    declare createdAt: CreationOptional<Date>;
-    declare updatedAt: CreationOptional<Date>;
-}
 
-export function CurrencyEntityInit(sequelize: Sequelize) {
-    CurrencyEntity.init({
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-            field: 'id'
-        },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            field: 'name'
-        },
-        code: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            field: 'code',
-            validate: {
-                notEmpty: true,
-                maxLength: 4
-            }
-        },
-        isCrypto: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            field: 'isCrypto',
-            defaultValue: 0
-        },
-        createdAt: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            field: 'createdAt',
-        },
-        updatedAt: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            field: 'updatedAt',
-        }
-    }, { sequelize, modelName: 'currency' });
+    @Attribute(DataTypes.STRING)
+    declare name: string;
+
+    @Attribute(DataTypes.STRING)
+    @NotNull
+    declare code: string;
+
+    @Attribute(DataTypes.BOOLEAN)
+    @Default(() => false)
+    declare isCrypto: boolean;
 }

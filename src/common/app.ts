@@ -6,7 +6,7 @@ import {errorHandlerMiddleware} from "./middleware/error-handler.middleware";
 import {Config} from "./models/config.model";
 import _debug from "debug";
 import {AppRouteModel} from "./models/app-route.model";
-
+import {dbx} from "./entities/kapibara.context.ts";
 
 export class AppSetup {
     private app: Express = express();
@@ -48,8 +48,12 @@ export class AppSetup {
 
     public start(): void {
         const debug = _debug('kapibara-server');
-        this.app.listen(this.config.port, () => {
-            debug(`Server started on port ${this.config.port}`);
-        });
+        dbx.build().then(instance => {
+        instance.sync({ force: true }).then(() => {
+                this.app.listen(this.config.port, () => {
+                    debug(`Server started on port ${this.config.port}`);
+                });
+            });
+        })
     }
 }
