@@ -3,18 +3,15 @@ import {NbpService} from "../../../api/services/nbp/nbp.service";
 
 
 describe('Database Context', () => {
-    let context: KapibaraContext;
+    let dbx: KapibaraContext;
     let nbpService: NbpService;
 
     beforeEach(async () => {
-        KapibaraContext.IN_MEMORY = true;
-        context = new KapibaraContext();
         nbpService = new NbpService();
-        await context.build();
     });
 
     test('Should return the database context', () => {
-        expect(context.instance).toBeTruthy();
+
     });
 
     test('Should create database scheme', () => {

@@ -1,33 +1,35 @@
 import {CreationOptional, DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model} from "@sequelize/core";
-import {CurrencyEntity} from "./currency.entity";
-import {
-    AllowNull,
-    Attribute,
-    AutoIncrement,
-    BelongsTo,
-    Default,
-    NotNull,
-    PrimaryKey, Table
-} from "@sequelize/core/decorators-legacy";
+import CurrencyEntity from "./currency.entity";
+import {ctx} from "./kapibara.context.ts";
 
-@Table({
+class RatesEntity extends Model { }
+
+RatesEntity.init({
+    id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    currencyId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: CurrencyEntity,
+            key: 'id'
+        }
+    },
+    mid: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+        defaultValue: 0
+    },
+    rateDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    }
+}, {
+    sequelize: ctx,
     tableName: "rates",
-})
-export class RatesEntity extends Model<InferAttributes<RatesEntity>, InferCreationAttributes<RatesEntity>> {
+    modelName: "RatesEntity",
+});
 
-    @PrimaryKey()
-    @AutoIncrement()
-    @Attribute(DataTypes.INTEGER)
-    declare id: CreationOptional<number>;
-
-    @BelongsTo(() => CurrencyEntity, 'id')
-    declare currencyId: ForeignKey<CurrencyEntity['id']>;
-
-    @Attribute(DataTypes.DECIMAL)
-    @NotNull()
-    @Default(() => 0)
-    declare mid: number;
-
-    @Attribute(DataTypes.DATE)
-    declare rateDate: Date;
-}
+export default RatesEntity;

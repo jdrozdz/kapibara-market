@@ -1,20 +1,36 @@
 @hostname=localhost
 @port=3000
 
-###
-
-GET http://{{hostname}}:{{port}}
+### Get all crypto
+GET http://{{hostname}}:{{port}}/api/crypto
 Content-Type: "application/json"
-ą
-###
 
+### Save crypto as favorite
 POST / HTTP/1.1
-Host: http://{{hostname}}:{{port}}
+Host: http://{{hostname}}:{{port}}/api/crypto
 Content-Type: "application/json"
-Content-Length: 11
 
-{
-    id: "ATTA"
-}
+{ "id": "ATTA" }
+
+###
+
+### Exchange rates
+
+### Get all currencies
+GET http://{{hostname}}:{{port}}/api/rates/exchange-rates
+Accept: 'application/json'
+Content-Type: 'text/json'
+
+### Add currency
+POST http://{{hostname}}:{{port}}/api/rates/exchange-rates
+Accept: application/json
+Content-Type: application/json
+
+{ "name": "Korona Duńska", "code": "DK", "isCrypto": 0 }
+
+### Remove currency
+DELETE http://{{hostname}}:{{port}}/api/rates/exchange-rates/1
+Accept: application/json
+Content-Type: application/json
 
 ###
