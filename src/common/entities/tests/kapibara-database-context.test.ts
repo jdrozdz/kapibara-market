@@ -1,5 +1,5 @@
 import {KapibaraContext} from "../kapibara.context";
-import {NbpService} from "../../../api/services/nbp/nbp.service";
+import {NbpService} from "../../services/nbp/nbp.service";
 
 
 describe('Database Context', () => {

@@ -1,0 +1,28 @@
+<%- include('_header'); -%>
+<div class="container">
+    <div>
+        Select currency to get today's rate
+        <form action="/" method="get">
+            <select name="code" aria-label="Currency">
+                <% currencies.forEach((c) => { %>
+                    <option value="<%=c.code%>" <% if(c.code === code) {%> selected <%}%>>
+                        <%=c.currency_pl%>
+                    </option>
+                <% }); %>
+            </select>
+            <button>Get</button>
+        </form>
+    </div>
+    <h1>Today USD rate</h1>
+        <table>
+            <tr>
+                <th>Rate no: <%= data.rateNo%></th>
+            </tr>
+            <tr>
+                <th>Rate: <%= data.mid%></th>
+            </tr>
+        </table>
+
+    <div id="chart" class="chart-area ch-sm"></div>
+</div>
+<%- include('_footer'); -%>

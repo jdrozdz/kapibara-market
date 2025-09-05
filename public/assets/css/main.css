@@ -3,6 +3,8 @@
     --secondary-color: #34699A;
     --url-color: #58A0C8;
     --font-color: #FDF5AA;
+    --chart-text: #000;
+    --chart-background: #fff;
 }
 
 * {
@@ -158,4 +160,29 @@ ul#sidebar a {
     align-items: center;
     display: flex;
     gap: 1em;
+}
+
+.chart-area {
+    background-color: hsl(from var(--chart-background) h s calc(l - 15));
+    border: 1px solid hsl(from var(--chart-background) h s calc(l - 30) / .3);
+    border-radius: 10px;
+    height: auto;
+    padding: 1em;
+
+    &.ch-sm {
+        width: 480px;
+    }
+    &.ch-md {
+        width: 780px;
+    }
+    &.ch-lg {
+        width: 1024px;
+    }
+}
+
+.apexcharts-menu-item {
+    color: var(--chart-text) !important;
+}
+.apexcharts-tooltip-active {
+    color: var(--chart-text) !important;
 }

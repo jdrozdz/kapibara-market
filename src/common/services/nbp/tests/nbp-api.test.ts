@@ -1,5 +1,5 @@
-import {NbpService} from "../nbp.service";
-import {NbpResponseModel} from "../nbp-response.model";
+import {NbpService} from "../nbp.service.ts";
+import {NbpResponseModel} from "../nbp-response.model.ts";
 
 
 describe('NBP API - exchange rates', () => {

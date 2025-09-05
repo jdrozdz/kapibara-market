@@ -1,4 +1,4 @@
-import {CreationOptional, DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model} from "@sequelize/core";
+import { DataTypes, Model} from "sequelize";
 import CurrencyEntity from "./currency.entity";
 import {ctx} from "./kapibara.context.ts";
 

@@ -48,10 +48,16 @@ export class AppSetup {
 
     public start(): void {
         const debug = _debug('kapibara-server');
-        ctx.sync({force: false}).then(() => {
+        if (this.config.enableView) {
             this.app.listen(this.config.port, () => {
                 debug(`Server started on port ${this.config.port}`);
             });
-        });
+        } else {
+            ctx.sync({force: false}).then(() => {
+                this.app.listen(this.config.port, () => {
+                    debug(`Server started on port ${this.config.port}`);
+                });
+            });
+        }
     }
 }

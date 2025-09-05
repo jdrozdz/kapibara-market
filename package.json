@@ -14,19 +14,20 @@
   "dependencies": {
     "@azure/identity": "^4.11.1",
     "@azure/keyvault-secrets": "^4.10.0",
+    "axios": "^1.11.0",
     "cookie-parser": "^1.4.7",
     "debug": "^4.4.1",
+    "ejs": "^3.1.10",
     "express": "^5.1.0",
     "fs-extra": "^11.3.1",
     "morgan": "^1.10.1",
     "nodemon": "^3.1.10",
     "pg": "^8.16.3",
     "postgres": "^3.4.7",
-    "rxjs": "^7.8.2",
     "sequelize": "^6.37.7",
     "ts-node": "^10.9.2",
-    "twig": "^1.15.4",
-    "uniqid": "^5.4.0"
+    "uniqid": "^5.4.0",
+    "xhr": "^2.6.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.5",
