@@ -1,12 +1,35 @@
 export const areaChartConfig: any = {
+    series: [{
+        data: []
+    }],
+    chart: {
+        id: 'area-datetime',
+        type: 'area',
+        height: 350,
+        zoom: {
+            autoScaleYaxis: true
+        }
+    },
+    annotations: {
+        yaxis: [],
+        xaxis: []
+    },
+    dataLabels: {
+        enabled: false
+    },
+    markers: {
+        size: 0,
+        style: 'hollow',
+    },
+    xaxis: {
+        type: 'datetime',
+        min: new Date('01 Mar 2012').getTime(),
+        tickAmount: 6,
+    },
     tooltip: {
         x: {
             format: 'dd MMM yyyy'
         }
-    },
-    stroke: {
-        width: 1,
-        curve: 'smooth'
     },
     fill: {
         type: 'gradient',
@@ -17,37 +40,4 @@ export const areaChartConfig: any = {
             stops: [0, 100]
         }
     },
-    dataLabels: {
-        enabled: false
-    },
-    markers: {
-        size: 0,
-        style: 'hollow',
-    },
-    annotations: {
-        yaxis: [{
-            y: 30,
-            borderColor: '#999',
-            label: {
-                show: true,
-                text: 'Support',
-                style: {
-                    color: "#fff",
-                    background: '#00E396'
-                }
-            }
-        }],
-        xaxis: [{
-            x: new Date('14 Nov 2012').getTime(),
-            borderColor: '#999',
-            yAxisIndex: 0
-        }]
-    },
-    chart: {
-        type: 'area',
-        height: 350,
-        zoom: {
-            autoScaleYaxis: true
-        }
-    },
-}
+};

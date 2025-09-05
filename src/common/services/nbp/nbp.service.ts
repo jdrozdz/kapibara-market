@@ -2,6 +2,7 @@ import {NBP_API} from "./nbp.config.ts";
 import {NbpResponseModel} from "./nbp-response.model.ts";
 import {NbpTable} from "./nbp-tables.enum.ts";
 import axios from "axios";
+import moment from "moment";
 
 export class NbpService {
 
@@ -22,6 +23,7 @@ export class NbpService {
     }
 
     public getRatesBetween(currency: string, start: Date, end: Date, table?: NbpTable) {
-        return axios.get<NbpResponseModel>(`${NBP_API.base_url}/rates/${table ?? NBP_API.defaultTable}/${currency}/${start.toDateString()}/${end.toDateString()}?format=${NBP_API.response_type}`);
+        const url = `${NBP_API.base_url}/rates/${table ?? NBP_API.defaultTable}/${currency}/${moment(start).format("YYYY-MM-DD")}/${moment(end).format("YYYY-MM-DD")}?format=${NBP_API.response_type}`;
+        return axios.get<NbpResponseModel>(url);
     }
 }

@@ -1,6 +1,8 @@
 <%- include('_header'); -%>
 <div class="container">
     <div>
+        <h1>Today's <%=code%> rate</h1>
+        <%if(currencies.length > 0) {%>
         Select currency to get today's rate
         <form action="/" method="get">
             <select name="code" aria-label="Currency">
@@ -12,8 +14,8 @@
             </select>
             <button>Get</button>
         </form>
+        <%}%>
     </div>
-    <h1>Today's <%=code%> rate</h1>
         <table>
             <tr>
                 <th>Rate no: <%= data.rateNo%></th>
@@ -22,7 +24,24 @@
                 <th>Rate: <%= data.mid%></th>
             </tr>
         </table>
-
+</div>
+<div class="container">
+    <h1>Historical rates</h1>
+    <form action="/" method="get">
+        <input type="hidden" name="code" value="<%=code%>" />
+        <table>
+            <tr>
+                <td>From: <input type="date" aria-label="Start date" name="start" /></td>
+                <td>To: <input type="date" name="end" aria-label="End date" /></td>
+                <td><button type="submit">Get</button></td>
+            </tr>
+        </table>
+    </form>
     <div id="chart" class="chart-area ch-sm"></div>
 </div>
+<script type="text/javascript" data-data="<%=JSON.stringify(chartOptions) %>">
+    const jsonData = JSON.parse(document.currentScript.dataset.data);
+    const chart = new ApexCharts(document.querySelector("#chart"), jsonData);
+    chart.render();
+</script>
 <%- include('_footer'); -%>
