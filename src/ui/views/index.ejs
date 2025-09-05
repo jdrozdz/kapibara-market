@@ -4,16 +4,16 @@
         Select currency to get today's rate
         <form action="/" method="get">
             <select name="code" aria-label="Currency">
-                <% currencies.forEach((c) => { %>
-                    <option value="<%=c.code%>" <% if(c.code === code) {%> selected <%}%>>
-                        <%=c.currency_pl%>
-                    </option>
+                <% currencies.forEach(c => { %>
+                <option value="<%=c.code%>" <% if(c.code === code) {%> selected <%}%>>
+                    <%=c.currency_name%>
+                </option>
                 <% }); %>
             </select>
             <button>Get</button>
         </form>
     </div>
-    <h1>Today USD rate</h1>
+    <h1>Today's <%=code%> rate</h1>
         <table>
             <tr>
                 <th>Rate no: <%= data.rateNo%></th>
